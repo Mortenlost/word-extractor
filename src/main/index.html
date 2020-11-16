@@ -5,10 +5,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Word Extractor</title>
     <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        .font {
+            font-family: 'Ubuntu', sans-serif;
+        }
+        .text-shadow-black {
+            text-shadow: 1px 1px 2px black;
+        }
+    </style>    
 </head>
-<body class="p-5 bg-indigo-700">
-    <input type="text" name="url" placeholder="URL" />
-    <input type="text" name="letter" placeholder="Letter" />
-    <button type="button">Get Words</button>
+<body class="bg-indigo-700 w-screen h-screen">
+    <div class="fixed top-0 left-0 w-screen h-screen z-0">
+        <img class="object-cover w-full h-full" src="./bg.jpg"/>
+    </div>
+    <div class="fixed top-0 left-0 w-screen h-screen z-10 pl-5">
+        <h1 class="text-white text-5xl font font-black text-shadow-black">
+            Word Extractor
+        </h1>
+        <input type="text" name="url" placeholder="URL" />
+        <input type="text" name="letter" placeholder="Letter" />
+        <button type="button">Get Words</button> 
+    </div>
 </body>
 </html>
