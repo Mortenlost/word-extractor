@@ -3,13 +3,36 @@
   "version": "1.0.0",
   "author": "Mortenlost",
   "license": "MIT",
+  "main": "src/electron.js",
   "scripts": {
-    "dev": "electron src/main/index.js"
+    "react-start": "parcel -p 3000 src/index.html --out-dir build",
+    "react-build": "parcel build src/index.html --out-dir build --public-url ./",
+    "electron-build": "electron-builder -mwl",
+    "clean-build": "rm -rf build/ .cache dist/",
+    "build": "yarn clean-build && yarn react-build && yarn electron-build",
+    "start": "concurrently \"cross-env BROWSER=none yarn react-start\" \"wait-on http://localhost:3000 && electron . \"",
+    "test-bundle": "bundlesize"
   },
   "dependencies": {
+    "electron-is-dev": "^1.2.0",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "react-router-dom": "^5.2.0"
   },
   "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-plugin-transform-react-jsx": "^6.24.1",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-react": "^6.24.1",
+    "bundlesize": "^0.18.0",
+    "concurrently": "^5.3.0",
+    "cross-env": "^7.0.2",
     "electron": "8.2.0",
-    "electron-builder": "^22.4.1"
+    "electron-builder": "^22.9.1",
+    "kind-of": "^6.0.3",
+    "parcel-bundler": "^1.12.4",
+    "wait-on": "^5.2.0"
   }
 }
