@@ -17,7 +17,8 @@
     "electron-is-dev": "^1.2.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
-    "react-router-dom": "^5.2.0"
+    "react-router-dom": "^5.2.0",
+    "valid-url": "^1.0.9"
   },
   "devDependencies": {
     "babel-core": "^6.26.3",
