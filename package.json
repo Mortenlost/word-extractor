@@ -5,6 +5,7 @@
   "license": "MIT",
   "main": "src/electron.js",
   "scripts": {
+    "prettify": "prettier --write src --print-width 100",
     "react-start": "parcel -p 3000 src/index.html --out-dir build",
     "react-build": "parcel build src/index.html --out-dir build --public-url ./",
     "electron-build": "electron-builder -mwl",
@@ -15,6 +16,7 @@
   },
   "dependencies": {
     "electron-is-dev": "^1.2.0",
+    "prettier": "^2.2.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-router-dom": "^5.2.0",
