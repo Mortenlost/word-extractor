@@ -1,12 +1,16 @@
 import React, { useRef, useState } from "react";
-import * as validUrl from "valid-url";
+import { isWebUri } from "valid-url";
 
 const bg = require("./bg.jpg");
 
 export const App = () => {
     const refUrl = useRef(null);
     const refLetter = useRef(null);
-    const [valid, setValid] = useState(false);
+    const [validUrl, setValidUrl] = useState(false);
+    const [validLetter, setValidLetter] = useState(false);
+    const [url, setUrl] = useState("");
+    const [letter, setLetter] = useState("");
+    const canExtract = validUrl && url && letter && validLetter;
     return (
         <div>
             <div className="fixed top-0 left-0 w-screen h-screen z-0">
@@ -18,16 +22,17 @@ export const App = () => {
                 </h1>
                 <form className="mt-5">
                     <input
-                        onChange={(e) => {
-                            if (validUrl.isWebUri(e.target.value)) {
-                                setValid(true);
+                        onChange={(e) => {     
+                            setUrl(e.target.value);                                           
+                            if (isWebUri(e.target.value)) {
+                                setValidUrl(true);                                
                             } else {
-                                setValid(false);
-                            }
+                                setValidUrl(false);                        
+                            }                            
                         }}
                         ref={refUrl}
                         className={`w-full mb-2 rounded p-2 text-lg text-gray-700 placeholder-gray-700 font focus:outline-none ${
-                            valid ? "" : "border-2 border-red-600"
+                            validUrl ? "" : "border-2 border-red-600"
                         }`}
                         type="text"
                         name="url"
@@ -35,7 +40,11 @@ export const App = () => {
                     />
                     <input
                         onChange={(e) => {
-                            if (!e.target.validity.valid) {
+                            setLetter(e.target.value)
+                            if (e.target.validity.valid) {
+                                setValidLetter(true);
+                            } else {
+                                setValidLetter(false);
                                 e.target.value = "";
                             }
                         }}
@@ -48,12 +57,18 @@ export const App = () => {
                         pattern="[a-z]*"
                     />
                     <button
-                        className="py-2 px-6 bg-teal-400 text-teal-900 font-bold text-xl rounded focus:outline-none"
-                        type="submit"
+                        className={`py-2 px-6 ${canExtract ? "bg-teal-400" : "bg-gray-400"} text-teal-900 font-bold text-xl rounded focus:outline-none`}
+                        type="submit" 
+                        disabled={!canExtract}
                     >
                         Get Words
                     </button>
                 </form>
+                {canExtract ? (
+                    <webview
+                        url={url}
+                    /> 
+                ) : null}
             </div>
         </div>
     );
