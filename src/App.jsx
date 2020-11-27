@@ -10,6 +10,7 @@ export const App = () => {
     const [validLetter, setValidLetter] = useState(false);
     const [url, setUrl] = useState("");
     const [letter, setLetter] = useState("");
+    const [words, setWords] = useState([]);
     const canExtract = validUrl && url && letter && validLetter;
     return (
         <div>
@@ -20,7 +21,11 @@ export const App = () => {
                 <h1 className="text-white text-5xl font font-black text-shadow-black">
                     Word Extractor
                 </h1>
-                <form className="mt-5">
+                <form className="mt-5" onSubmit={(e) => {
+                    e.preventDefault();
+                    // TODO: get actual list
+                    setWords(["flan", "pitufo", "ginger"]);
+                }}>                    
                     <input
                         onChange={(e) => {     
                             setUrl(e.target.value);                                           
@@ -63,13 +68,17 @@ export const App = () => {
                     >
                         Get Words
                     </button>
-                </form>
-                {canExtract ? (
-                    <webview
-                        url={url}
-                    /> 
-                ) : null}
-            </div>
+                </form>  
+                <div>
+                    {words.map((word, i) => {
+                        return (
+                            <div key={`word-${i}`} className="mt-2 text-xl text-white font">
+                                {word}
+                            </div>
+                        );
+                    })}
+                </div>          
+            </div>            
         </div>
     );
 };
