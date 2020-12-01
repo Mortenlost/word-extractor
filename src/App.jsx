@@ -2,6 +2,8 @@ import Axios from "axios";
 import React, { useRef, useState } from "react";
 import { isWebUri } from "valid-url";
 import { BROWSERLESS_API_KEY } from "./constants";
+import * as cheerio from "cheerio";
+
 
 const bg = require("./bg.jpg");
 
@@ -18,9 +20,15 @@ export const App = () => {
     const getWords = (l, u) => {
         Axios.post(`https://chrome.browserless.io/content?token=${BROWSERLESS_API_KEY}`, {
             url: u,
-        }).then((response) => {
-            // TODO: extract content and get words  
-            console.log(response.data);
+        }).then((response) => {            
+            const $ = cheerio.load(response.data, {
+                xmlMode: true,
+                normalizeWhitespace: true,
+                decodeEntities: true,
+            });
+            // TODO: extract words 
+            const content = $("body").text();
+            console.log(content);
         });
     };
 
