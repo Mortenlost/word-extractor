@@ -15,6 +15,7 @@
     "test-bundle": "bundlesize"
   },
   "dependencies": {
+    "axios": "^0.21.0",
     "electron-is-dev": "^1.2.0",
     "prettier": "^2.2.0",
     "react": "^17.0.1",
@@ -23,6 +24,7 @@
     "valid-url": "^1.0.9"
   },
   "devDependencies": {
+    "@types/axios": "^0.14.0",
     "babel-core": "^6.26.3",
     "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",

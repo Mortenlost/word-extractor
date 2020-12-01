@@ -1,5 +1,7 @@
+import Axios from "axios";
 import React, { useRef, useState } from "react";
 import { isWebUri } from "valid-url";
+import { BROWSERLESS_API_KEY } from "./constants";
 
 const bg = require("./bg.jpg");
 
@@ -12,6 +14,16 @@ export const App = () => {
     const [letter, setLetter] = useState("");
     const [words, setWords] = useState([]);
     const canExtract = validUrl && url && letter && validLetter;
+
+    const getWords = (l, u) => {
+        Axios.post(`https://chrome.browserless.io/content?token=${BROWSERLESS_API_KEY}`, {
+            url: u,
+        }).then((response) => {
+            // TODO: extract content and get words  
+            console.log(response.data);
+        });
+    };
+
     return (
         <div>
             <div className="fixed top-0 left-0 w-screen h-screen z-0">
@@ -23,8 +35,7 @@ export const App = () => {
                 </h1>
                 <form className="mt-5" onSubmit={(e) => {
                     e.preventDefault();
-                    // TODO: get actual list
-                    setWords(["flan", "pitufo", "ginger"]);
+                    getWords(letter, url);                                        
                 }}>                    
                     <input
                         onChange={(e) => {     
@@ -64,7 +75,7 @@ export const App = () => {
                     <button
                         className={`py-2 px-6 ${canExtract ? "bg-teal-400" : "bg-gray-400"} text-teal-900 font-bold text-xl rounded focus:outline-none`}
                         type="submit" 
-                        disabled={!canExtract}
+                        disabled={!canExtract}                        
                     >
                         Get Words
                     </button>

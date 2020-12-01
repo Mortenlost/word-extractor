@@ -6,3 +6,4 @@ thumbs.db
 .cache
 dist
 build
+src/constants.js
