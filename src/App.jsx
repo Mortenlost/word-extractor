@@ -3,7 +3,7 @@ import React, { useRef, useState } from "react";
 import { isWebUri } from "valid-url";
 import { BROWSERLESS_API_KEY } from "./constants";
 import * as cheerio from "cheerio";
-
+import { uniq } from "lodash";
 
 const bg = require("./bg.jpg");
 
@@ -25,10 +25,15 @@ export const App = () => {
                 xmlMode: true,
                 normalizeWhitespace: true,
                 decodeEntities: true,
-            });
-            // TODO: extract words 
-            const content = $("body").text();
-            console.log(content);
+            });            
+
+            let content = $("body").text();
+            content = content.toLowerCase();
+            content = content.replace(/[^a-z ]/g, "");
+            content = content.replace(/\s+/g, " ");                
+
+            // TODO: filter by letter        
+            setWords(uniq(content.split(" ").filter(x => x.length > 1)));    
         });
     };
 
