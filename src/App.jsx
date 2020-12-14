@@ -20,20 +20,22 @@ export const App = () => {
     const getWords = (l, u) => {
         Axios.post(`https://chrome.browserless.io/content?token=${BROWSERLESS_API_KEY}`, {
             url: u,
-        }).then((response) => {            
+        }).then((response) => {
             const $ = cheerio.load(response.data, {
                 xmlMode: true,
                 normalizeWhitespace: true,
                 decodeEntities: true,
-            });            
+            });
 
             let content = $("body").text();
             content = content.toLowerCase();
             content = content.replace(/[^a-z ]/g, "");
-            content = content.replace(/\s+/g, " ");                
+            content = content.replace(/\s+/g, " ");
 
-            setWords(uniq(content.split(" ").filter(x => x.length > 1 && x.startsWith(letter))));   
-             
+            let contentWords = content.split(" ");
+            contentWords = uniq(contentWords);
+            contentWords = contentWords.filter((x) => x.length > 1 && x.startsWith(letter));
+            setWords(contentWords);
         });
     };
 
@@ -48,16 +50,16 @@ export const App = () => {
                 </h1>
                 <form className="mt-5" onSubmit={(e) => {
                     e.preventDefault();
-                    getWords(letter, url);                                        
-                }}>                    
+                    getWords(letter, url);
+                }}>
                     <input
-                        onChange={(e) => {     
-                            setUrl(e.target.value);                                           
+                        onChange={(e) => {
+                            setUrl(e.target.value);
                             if (isWebUri(e.target.value)) {
-                                setValidUrl(true);                                
+                                setValidUrl(true);
                             } else {
-                                setValidUrl(false);                        
-                            }                            
+                                setValidUrl(false);
+                            }
                         }}
                         ref={refUrl}
                         className={`w-full mb-2 rounded p-2 text-lg text-gray-700 placeholder-gray-700 font focus:outline-none ${
@@ -87,12 +89,12 @@ export const App = () => {
                     />
                     <button
                         className={`py-2 px-6 ${canExtract ? "bg-teal-400" : "bg-gray-400"} text-teal-900 font-bold text-xl rounded focus:outline-none`}
-                        type="submit" 
-                        disabled={!canExtract}                        
+                        type="submit"
+                        disabled={!canExtract}
                     >
                         Get Words
                     </button>
-                </form>  
+                </form>
                 <div>
                     {words.map((word, i) => {
                         return (
@@ -101,8 +103,8 @@ export const App = () => {
                             </div>
                         );
                     })}
-                </div>          
-            </div>            
+                </div>
+            </div>
         </div>
     );
 };
