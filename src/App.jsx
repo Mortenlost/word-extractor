@@ -32,8 +32,8 @@ export const App = () => {
             content = content.replace(/[^a-z ]/g, "");
             content = content.replace(/\s+/g, " ");                
 
-            // TODO: filter by letter        
-            setWords(uniq(content.split(" ").filter(x => x.length > 1)));    
+            setWords(uniq(content.split(" ").filter(x => x.length > 1 && x.startsWith(letter))));   
+             
         });
     };
 
