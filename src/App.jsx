@@ -18,6 +18,7 @@ export const App = () => {
     const canExtract = validUrl && url && letter && validLetter;
 
     const getWords = (l, u) => {
+        setWords([]);
         Axios.post(`https://chrome.browserless.io/content?token=${BROWSERLESS_API_KEY}`, {
             url: u,
         }).then((response) => {
@@ -38,6 +39,8 @@ export const App = () => {
             setWords(contentWords);
         });
     };
+
+    // TODO: add loading and show full list 
 
     return (
         <div>
